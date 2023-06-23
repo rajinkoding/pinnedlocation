@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"proyek-soa","dependencies":{"@joi/date":{"version":"2.1.0"},"@prisma/client":{"version":"4.13.0"},"axios":{"version":"1.4.0"},"bcrypt":{"version":"5.1.0"},"express":{"version":"4.18.2"},"joi":{"version":"17.9.2"},"jsonwebtoken":{"version":"9.0.0"}}}

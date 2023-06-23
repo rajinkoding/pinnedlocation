@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// migration 
+// npx prisma migrate dev --name init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model developer {
+  id                 Int       @id @default(autoincrement())
+  name               String
+  email              String    @unique
+  password           String
+  uploadKTP          String    
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime?
+  user               user[]
+}
+
+model user {
+  id             Int              @id @default(autoincrement())
+  customId       String           @unique
+  name           String
+  pinnedLocation pinnedLocation[]
+  developerId    Int
+  developer      developer        @relation(fields: [developerId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+
+  @@unique(fields: [developerId, customId], name: "userStatus")
+}
+
+model pinnedLocation {
+  id                              Int       @id @default(autoincrement())
+  userCustomId                    String
+  userId                          user      @relation(fields: [userCustomId], references: [customId])
+  locationName                    String
+  latitude                        String
+  longitude                       String
+  userCustomId_latitude_longitude String
+  createdAt                       DateTime  @default(now())
+  updatedAt                       DateTime  @updatedAt
+
+
+  @@unique(fields: [id], name: "pinLocationStatus")
+}
